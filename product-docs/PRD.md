@@ -1,6 +1,6 @@
 # Product Requirements Document (PRD)
 **Project:** Agentic Commerce "Delegated Auth" Protocol
-**Status:** Draft
+**Status:** POC Complete
 
 ## 1. Problem Statement
 AI Agents are becoming capable of executing complex shopping tasks. However, current payment flows fail for agents because:
@@ -33,11 +33,20 @@ A "Delegated Authority" framework where PayPal issues a scoped, budget-limited t
 ### B. The "Command Center" (Frontend)
 *   Dashboard must display real-time budget utilization.
 *   "Approval Queue" for transactions flagged as `PENDING_AUTH`.
+*   **Modern UI:** Accessible, high-contrast interface with large touch targets.
+*   **Reset Capability:** Ability to wipe agent memory and reset budget for testing.
+
+### C. Secure Checkout (SvelteKit)
+*   **Integration:** Embedded iframe within the dashboard.
+*   **Provider:** PayPal Orders API v2.
+*   **Flow:** Server-side order creation -> Client-side approval -> Server-side capture (simulated).
+*   **Security:** Sandboxed environment, no raw card data handling.
 
 ## 6. Success Metrics (KPIs)
 *   **North Star:** "Agent TPV" (Total Payment Volume processed by Agents).
 *   **Risk Metric:** Fraud Loss Rate (Target: < 5 basis points).
 *   **UX Metric:** % of transactions completed without human intervention (Target: > 80%).
+*   **Reliability:** Checkout Success Rate (Target: > 99%).
 
 ## 7. Corner Cases & Risks
 *   **Scenario:** Agent gets stuck in a loop and tries to buy the same item 50 times in 1 minute.
