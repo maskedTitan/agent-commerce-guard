@@ -188,8 +188,8 @@ def complete_payment(req: CompletePaymentRequest):
 
 # --- PAYPAL INTEGRATION ---
 
-PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID", "ARlx7CgH_ptjjy-eWPu6ZBBox604ONYKDERdGzmyVdW0s3nMWRnf_gjI738desC3n6rNoKyn5ugnGb7c")
-PAYPAL_SECRET = os.getenv("PAYPAL_SECRET", "EIAw_w9V0JD2IHO9U30Z8Ju0tNiizMi8c-4qgjY4iWXXwXtMdk_daq4hYdTSYo41IyZHK1ELDreNFYTA")
+PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
+PAYPAL_SECRET = os.getenv("PAYPAL_SECRET")
 PAYPAL_API_BASE = "https://api-m.sandbox.paypal.com"
 
 class CreatePayPalOrderRequest(BaseModel):

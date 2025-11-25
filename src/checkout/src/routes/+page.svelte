@@ -24,9 +24,7 @@
 
         try {
             const paypal = await loadScript({
-                clientId:
-                    import.meta.env.VITE_PAYPAL_CLIENT_ID ||
-                    "ARlx7CgH_ptjjy-eWPu6ZBBox604ONYKDERdGzmyVdW0s3nMWRnf_gjI738desC3n6rNoKyn5ugnGb7c",
+                clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
                 currency: "USD",
             });
 
