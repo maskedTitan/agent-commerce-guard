@@ -24,6 +24,8 @@ This project implements a **"Delegated Authority" Middleware** for AI Agents wit
 - **Conversational AI**: Type natural language requests like "buy a Cybertruck" or "get me AirPods"
 - **Product Knowledge**: Agent knows typical prices and merchants (e.g., Cybertruck → Tesla, ~$80k)
 - **Conversation Memory**: Maintains context across multiple messages
+- **Secure PayPal Checkout**: Integrated SvelteKit app for safe, sandboxed payment processing
+- **Modern UI**: Sleek, accessible dashboard with "Command Center" aesthetic
 - **Multi-Layer Security**:
   - Budget enforcement ($10,000 daily limit)
   - Amount thresholds (>$5,000 requires approval)
@@ -54,20 +56,22 @@ pip install -r requirements.txt
 Create a `.env` file in the project root (for local development):
 ```bash
 cp .env.example .env
-# Edit .env and add your OpenAI API key:
+# Edit .env and add your keys:
 # OPENAI_API_KEY=sk-proj-your-actual-key-here
+# PAYPAL_CLIENT_ID=your-paypal-client-id
 ```
 
 Or export directly (alternative method):
 ```bash
 export OPENAI_API_KEY='sk-proj-your-actual-key-here'
+export PAYPAL_CLIENT_ID='your-paypal-client-id'
 ```
 
 **Note for Production:** Never use `.env` files in production. Use environment variables injected by your deployment platform (Docker, Kubernetes, AWS, etc.). See `.env.example` for details.
 
 **3. Run the Services**
 
-Open two terminal windows:
+Open three terminal windows:
 
 **Terminal 1 - Start the API (Risk Engine):**
 ```bash
@@ -83,6 +87,14 @@ cd agent-commerce-guard
 source venv/bin/activate
 streamlit run src/dashboard/app.py
 # Dashboard opens at http://localhost:8501
+```
+
+**Terminal 3 - Start the Checkout App (SvelteKit):**
+```bash
+cd agent-commerce-guard/src/checkout
+npm install
+npm run dev
+# Checkout app runs at http://localhost:5173
 ```
 
 **4. Use the Application**
@@ -137,6 +149,12 @@ Try these prompts to see the risk engine in action:
 - Real-time transaction status updates
 - Chat-based interaction with history
 - Color-coded transaction logs
+- **Modern UI** with custom CSS for accessibility
+
+**Secure Checkout (SvelteKit)**
+- Embedded iframe integration
+- PayPal Orders API v2 implementation
+- Sandboxed payment processing
 
 ### 🔒 Security Layers
 
@@ -168,11 +186,15 @@ Try these prompts to see the risk engine in action:
 agent-commerce-guard/
 ├── src/
 │   ├── api/
-│   │   └── main.py           # FastAPI risk engine (135 lines)
+│   │   └── main.py           # FastAPI risk engine
 │   ├── agent/
 │   │   └── shopper.py        # CLI agent (legacy - optional)
-│   └── dashboard/
-│       └── app.py            # Unified Streamlit UI (276 lines)
+│   ├── dashboard/
+│   │   └── app.py            # Unified Streamlit UI
+│   └── checkout/             # SvelteKit PayPal App
+│       ├── src/routes/
+│       │   └── +page.svelte  # Checkout UI
+│       └── package.json
 ├── product-docs/
 │   ├── PRD.md                # Product requirements
 │   └── RISK_ASSESSMENT.md    # Security threat model
@@ -189,7 +211,7 @@ agent-commerce-guard/
 - [ ] Transaction history export (CSV/JSON)
 - [ ] Email/SMS notifications for pending approvals
 - [ ] Machine learning-based fraud detection
-- [ ] Integration with real payment gateways (Stripe, PayPal)
+- [x] Integration with real payment gateways (Stripe, PayPal)
 - [ ] Webhook support for external systems
 
 ### 📄 License
